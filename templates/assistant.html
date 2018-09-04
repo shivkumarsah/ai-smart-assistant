@@ -16,7 +16,7 @@
             margin: 0;
         }
         section {
-            height: 100vh;
+            height: 100%;
         }
         .login-block{
             background: #DE6262;  /* fallback for old browsers */
@@ -86,9 +86,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card" id="results">
-                    <div class="card-header">Engine Recommendations</div>
-                    <div class="card-body">
-
+                    <div class="card-header" data-toggle="collapse" href="#collapseResult">Engine Recommendations</div>
+                    <div class="card-body collapse show" id="collapseResult">
                         <div class="card alert-success">
                             <div class="card-header">
                                 <div class="col-md-8 float-left">
@@ -159,17 +158,29 @@
                 </div>
             </div>
         </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" id="result_update">
+                    <div class="card-header" data-toggle="collapse" href="#collapseUpdate">Update Solution</div>
+                    <div class="card-body collapse show" id="collapseUpdate">
 
-
-        <div class="row">
-            &nbsp;
+                        <form class="login-form" name="login" method="get" action="assistant">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <textarea class="form-control" placeholder="Enter ticket subject..." aria-label="Recipient's username" aria-describedby="basic-addon2"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input type="submit" class="btn btn-login float-right" value="Update" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            &nbsp;
-        </div>
-        <div class="row">
-            &nbsp;
-        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
 
     </div>
 </section>
@@ -210,7 +221,7 @@
     createProgressBar(container, 0.8);
     createProgressBar(container2, 0.50);
     createProgressBar(container3, 0.38);
-    $('#results').hide();
+    //$('#results').hide();
     $('#search').click(function () {
         //$('#results').show();
         //$('#results').show('slow');
