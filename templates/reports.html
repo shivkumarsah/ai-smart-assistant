@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+
+{% block title %}Ciena:: Reports{% endblock %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="login-sec" style="padding-bottom: 0px;">
+                  <h2 class="text-center">Reports</h2>
+                </div>
+                <div class="card" id="results">
+                    <div class="card-header" data-toggle="collapse" href="#collapseResult">Search Reports</div>
+                    <div class="card-body collapse show" id="collapseResult">
+
+                      <div class="col-md-6 float-left">
+                          <div id="chart1" style="min-width: 310px; margin: 0 auto"></div>
+                      </div>
+                      <div class="col-md-6 float-right">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Month</th>
+                              <th scope="col">No of Search</th>
+                              <th scope="col">No of Results</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Jan 2018</td>
+                              <td>345</td>
+                              <td>768</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Feb 2018</td>
+                              <td>765</td>
+                              <td>1873</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>March 2018</td>
+                              <td>987</td>
+                              <td>2173</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>April 2018</td>
+                              <td>1204</td>
+                              <td>2673</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>May 2018</td>
+                              <td>1432</td>
+                              <td>2954</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">6</th>
+                              <td>June 2018</td>
+                              <td>1432</td>
+                              <td>2954</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">7</th>
+                              <td>July 2018</td>
+                              <td>1432</td>
+                              <td>2954</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" id="result_update">
+                    <div class="card-header" data-toggle="collapse" href="#collapseUpdate">Accuracy and Precision Reports</div>
+                    <div class="card-body collapse show" id="collapseUpdate">
+
+                        <div class="col-md-6 float-left">
+                          <div id="chart2" style="min-width: 310px; margin: 0 auto"></div>
+                      </div>
+                      <div class="col-md-6 float-right">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Month</th>
+                              <th scope="col">No of Search</th>
+                              <th scope="col">No of Results</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Jan 2018</td>
+                              <td>345</td>
+                              <td>768</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Feb 2018</td>
+                              <td>765</td>
+                              <td>1873</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>March 2018</td>
+                              <td>987</td>
+                              <td>2173</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>April 2018</td>
+                              <td>1204</td>
+                              <td>2673</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>May 2018</td>
+                              <td>1432</td>
+                              <td>2954</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">6</th>
+                              <td>June 2018</td>
+                              <td>1432</td>
+                              <td>2954</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">7</th>
+                              <td>July 2018</td>
+                              <td>1432</td>
+                              <td>2954</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+
+
+Highcharts.chart('chart1', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Monthly Search reports'
+    },
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Values'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Search',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'Result',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'Accuracy',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Feedback',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]
+});
+
+
+
+Highcharts.chart('chart2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Accuracy and Precision in September, 2018'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Chrome',
+            y: 61.41,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Internet Explorer',
+            y: 11.84
+        }, {
+            name: 'Firefox',
+            y: 10.85
+        }, {
+            name: 'Edge',
+            y: 4.67
+        }, {
+            name: 'Safari',
+            y: 4.18
+        }, {
+            name: 'Sogou Explorer',
+            y: 1.64
+        }, {
+            name: 'Opera',
+            y: 1.6
+        }, {
+            name: 'QQ',
+            y: 1.2
+        }, {
+            name: 'Other',
+            y: 2.61
+        }]
+    }]
+});
+
+</script>
+{% endblock %}
+
+{% block header %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+{% endblock %}
