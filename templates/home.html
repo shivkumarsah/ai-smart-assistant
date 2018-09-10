@@ -9,7 +9,7 @@
                 <form class="login-form" name="login" method="get" action="assistant">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Enter ticket subject..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <input type="text" id="search_for" class="form-control" placeholder="Enter ticket subject..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <input type="button" id="search" class="btn btn-outline-secondary btn-login float-right" value="Search" />
                             </div>
@@ -23,8 +23,8 @@
             <div class="col-md-12">
                 <div class="card" id="results">
                     <div class="card-header" data-toggle="collapse" href="#collapseResult">Engine Recommendations</div>
-                    <div class="card-body collapse show" id="collapseResult">
-                        <div class="card alert-success">
+                    <div class="card-body collapse hide" id="collapseResult">
+                        <!--div class="card alert-success">
                             <div class="card-header">
                                 <div class="col-md-8 float-left">
                                     <div id="container" style="margin-top: -8px; width: 80px; height: 30px; text-align: right;"></div>
@@ -75,7 +75,7 @@
                             <div class="card-body">
                                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                             </div>
-                        </div>
+                        </div!-->
 
                         <!--div class="card alert-dark">
                             <div class="card-header">
@@ -155,16 +155,103 @@
 
         bar.animate(percent);  // Number from 0.0 to 1.0
     }
-    createProgressBar(container, 0.8);
-    createProgressBar(container2, 0.50);
-    createProgressBar(container3, 0.38);
+    //createProgressBar(container, 0.8);
+    //createProgressBar(container2, 0.50);
+    //createProgressBar(container3, 0.38);
     //$('#results').hide();
     $('#search').click(function () {
         //$('#results').show();
         //$('#results').show('slow');
-        $('#results').slideDown('slow');
-    })
 
+        $.ajax({
+            method: "GET",
+            //url: "http://172.20.10.2:8080/query2engine/", //"/query2engine/",
+            url: "/query2engine/",
+            data: { query: $('#search_for').val() },
+            crossDomain: true
+        }).success(function (data) {
+            console.log("SUCCESS");
+
+            $.each(data["response"], function (key, val) {
+                //console.log((key, val));
+
+                var container = 'container';
+                var el = document.createElement('div');
+                if (val.confidence >= 0.32) {
+                    var domString = '<div class="card alert-success">\n' +
+                        '                            <div class="card-header">\n' +
+                        '                                <div class="col-md-8 float-left">\n' +
+                        '                                    <div id="container1">Confidence: '+(val.confidence*100)+'</div>\n' +
+                        '                                </div>\n' +
+                        '                                <div class="col-md-2 float-right" align="right">\n' +
+                        '                                    <div>Rate: &nbsp;\n' +
+                        '                                        <a href="javascript:void(0);"><span class="oi oi-thumb-up"></span></a> &nbsp;\n' +
+                        '                                        <a href="javascript:void(0);"><span class="oi oi-thumb-down"></span></a>\n' +
+                        '                                    </div>\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="card-body">\n' +
+                        '                                <p class="card-text">'+val.response+'</p>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div>&nbsp;</div>';
+                } else if(val.confidence >= 0.30) {
+                    var domString = '<div class="card alert-warning">\n' +
+                        '                            <div class="card-header">\n' +
+                        '                                <div class="col-md-8 float-left">\n' +
+                        '                                    <div id="container2">Confidence: '+val.confidence+'</div>\n' +
+                        '                                </div>\n' +
+                        '                                <div class="col-md-2 float-right" align="right">\n' +
+                        '                                    <div>Rate: &nbsp;\n' +
+                        '                                        <a href="javascript:void(0);"><span class="oi oi-thumb-up"></span></a> &nbsp;\n' +
+                        '                                        <a href="javascript:void(0);"><span class="oi oi-thumb-down"></span></a>\n' +
+                        '                                    </div>\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="card-body">\n' +
+                        '                                <p class="card-text">'+val.response+'</p>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div>&nbsp;</div>';
+                } else {
+                    var domString = '<div class="card alert-dark">\n' +
+                        '                            <div class="card-header">\n' +
+                        '                                <div class="col-md-8 float-left">\n' +
+                        '                                    <div id="container3">Confidence: '+val.confidence+'</div>\n' +
+                        '                                </div>\n' +
+                        '                                <div class="col-md-2 float-right" align="right">\n' +
+                        '                                    <div>Rate: &nbsp;\n' +
+                        '                                        <a href="javascript:void(0);"><span class="oi oi-thumb-up"></span></a> &nbsp;\n' +
+                        '                                        <a href="javascript:void(0);"><span class="oi oi-thumb-down"></span></a>\n' +
+                        '                                    </div>\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="card-body">\n' +
+                        '                                <p class="card-text">'+val.response+'</p>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                        <div>&nbsp;</div>';
+                }
+                el.innerHTML =  domString;
+                $("#collapseResult").append(el.firstChild);
+                var el2 = document.createElement('div');
+                var domString2 = '<div>&nbsp;</div>';
+                el2.innerHTML =  domString2;
+                $("#collapseResult").append(el2.firstChild);
+            });
+
+        }).done(function (data) {
+            console.log("DONE");
+            $.each(data["response"], function (key, val) {
+                console.log((key, val));
+                //createProgressBar(container, val.confidence);
+            });
+            $('#collapseResult').slideDown('slow');
+
+        }).fail(function () {
+            $('#search_for').val("fail");
+        });
+    });
 
 </script>
 

@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
+import views
 
 """
 urlpatterns = [
@@ -27,8 +28,11 @@ urlpatterns = [
 ]
 """
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^$', views.dashboard, name='home'),
+    url(r'^dashboard$', views.dashboard, name='dashboard'),
+    #url(r'^dashboard$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
     url(r'^reports/$', TemplateView.as_view(template_name='reports.html'), name='reports'),
+    url(r'^query2engine/$', views.query2engine, name='query2engine'),
 ]
