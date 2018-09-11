@@ -40,10 +40,8 @@ def query2engine(request):
 
 
 def update(request):
-    #save new ticket and solution for re-training and modeling
+    """save new ticket and solution for re-training and modeling"""
     try:
-        #tickets = Tickets.objects.all()
-        #print("tickets === ", tickets)
         if request.method == 'POST':
             ticket = Tickets()
             ticket.problem = request.POST['query']

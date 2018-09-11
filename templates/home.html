@@ -4,53 +4,55 @@
 
 {% block content %}
 <form class="login-form" name="login" method="post">
-
-        <div class="row">
-            <div class="col-md-12 login-sec">
-                <h2 class="text-center">Search Problem Statement:</h2>
-
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <input type="text" id="search_for" class="form-control" placeholder="Enter ticket subject..." aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button type="button" id="search" value="Search" class="btn btn-outline-secondary btn-login float-right">Search</button>
-                        </div>
-                    </div>
-                </div>
-                <div id='search-messages-container'></div>
-            </div>
+    <div class="row">
+        <div class="col-md-2">
+            <img height="200" align="center" src="https://steemitimages.com/0x0/https://cdn.dribbble.com/users/37530/screenshots/2937858/drib_blink_bot.gif">
         </div>
-        <div class="row" style="margin-top: -10px;">
-            <div class="col-md-12">
-                <div class="card" id="results">
-                    <div class="card-header" data-toggle="collapse" href="#collapseResult">Engine Recommendations</div>
-                    <div class="card-body collapse hide" id="collapseResult"> </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row" id="result_update_row">
-            <div class="col-md-12">
-                <div class="card" id="result_update">
-                    <div class="card-header" data-toggle="collapse" href="#collapseUpdate">Improve Solution</div>
-                    <div class="card-body collapse show" id="collapseUpdate">
-                        <div id='update-messages-container'></div>
-                        <div class="form-group">
-                            <div class="input-group mb-3">
-                                <textarea class="form-control" id="solution" placeholder="Enter ticket subject..." aria-describedby="basic-addon2"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-check">
-                            {% csrf_token %}
-                            <input type="button" id="update" class="btn btn-login float-right" value="Update" />
-                        </div>
-
+        <div class="col-md-10 login-sec" style="padding-left: 50px;">
+            <h3 style="padding-left: 12px;">Ask me:</h3>
+            <div class="row">&nbsp;</div>
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input type="text" id="search_for" class="form-control" placeholder="Enter your ticket problem statement..." />
+                    <div class="input-group-append">
+                        <button type="button" id="search" value="Search" class="btn btn-outline-secondary btn-login float-right">Search</button>
                     </div>
                 </div>
             </div>
+            <div id='search-messages-container'></div>
         </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">&nbsp;</div>
+    </div>
+    <div class="row" style="margin-top: -10px;">
+        <div class="col-md-12">
+            <div class="card" id="results">
+                <div class="card-header" data-toggle="collapse" href="#collapseResult">Engine Recommendations</div>
+                <div class="card-body collapse hide" id="collapseResult"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row" id="result_update_row">
+        <div class="col-md-12">
+            <div class="card" id="result_update">
+                <div class="card-header" data-toggle="collapse" href="#collapseUpdate">Improve Solution</div>
+                <div class="card-body collapse show" id="collapseUpdate">
+                    <div id='update-messages-container'></div>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" id="solution" placeholder="Enter ticket subject..." aria-describedby="basic-addon2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        {% csrf_token %}
+                        <input type="button" id="update" class="btn btn-login float-right" value="Update" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
 </form>
 {% endblock %}
 {% block scripts %}
@@ -89,9 +91,7 @@
 
         bar.animate(percent);  // Number from 0.0 to 1.0
     }
-    //createProgressBar(container, 0.8);
-    //createProgressBar(container2, 0.50);
-    //createProgressBar(container3, 0.38);
+
     $('#results').hide();
     $('#result_update_row').hide();
     $('#update').click(function () {
@@ -140,18 +140,17 @@
     }
 
     $('#search').click(function () {
-    //function searchProblem() {
         if ($('#search_for').val()) {
-            //$('#search').attr("disabled", "disabled");
+
+            $('#results').hide();
+            $('#result_update_row').hide();
 
             var $this = $('.btn');
             var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
             if ($(this).html() !== loadingText) {
                 $this.data('original-text', $(this).html());
                 $this.html(loadingText);
-                //searchProblem();
             }
-
             $.ajax({
                 method: "GET",
                 url: "/query2engine/",
