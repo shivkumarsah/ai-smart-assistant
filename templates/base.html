@@ -107,11 +107,8 @@
     </nav>
     {% endif %}
 
-{% if user.is_authenticated %}
-<section class="login-block" style="padding: 10px">
-{% else %}
-<section class="login-block">
-{% endif %}
+
+<section class="login-block" {% if user.is_authenticated %} style="padding: 10px"{% endif %}>
     <div class="container">
 
       {% block content %}

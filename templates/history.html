@@ -27,7 +27,7 @@
                         {% for item in searches %}
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ item.problem | title }}</td>
+                            <td><a href="/">{{ item.problem | title }}</a></td>
                             <td>{{ item.confidence }}%</td>
                             <td>{{ item.solution | title }}</td>
                             <td>{{ item.date }}</td>
@@ -58,7 +58,7 @@
                         {% for item in tickets %}
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ item.problem | title}}</td>
+                            <td><a href="/">{{ item.problem | title }}</a></td>
                             <td>{{ item.solution | title }}</td>
                             <td>{{ item.date }}</td>
                         </tr>
