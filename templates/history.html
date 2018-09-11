@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Ciena:: Search History{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-sec" style="padding-bottom: 0px;">
+            <h2 class="text-center">Recommendations History</h2>
+        </div>
+        <div class="card" id="results">
+            <div class="card-header" data-toggle="collapse">Last search summary</div>
+            <div class="card-body collapse show" style="padding: 0; margin: 0;">
+
+                <div class="col-md-12 float-right">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Problem</th>
+                            <th scope="col">Confidence (%)</th>
+                            <th scope="col">Best Response</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in searches %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ item.problem | title }}</td>
+                            <td>{{ item.confidence }}%</td>
+                            <td>{{ item.solution | title }}</td>
+                            <td>{{ item.date }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+
+        <div class="card">
+            <div class="card-header" data-toggle="collapse" href="#collapseResult">Improved solutions -  In queue for re-training
+            </div>
+            <div class="card-body collapse show" style="padding: 0; margin: 0;">
+                <div class="col-md-12 float-right">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Problem</th>
+                            <th scope="col">Solution</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in tickets %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ item.problem | title}}</td>
+                            <td>{{ item.solution | title }}</td>
+                            <td>{{ item.date }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+
+{% endblock %}

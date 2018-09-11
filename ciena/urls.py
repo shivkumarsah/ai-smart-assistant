@@ -36,5 +36,6 @@ urlpatterns = [
     url(r'^reports/$', TemplateView.as_view(template_name='reports.html'), name='reports'),
     url(r'^query2engine/$', views.query2engine, name='query2engine'),
     url(r'^update/$', views.update, name='update'),
+    url(r'^history/$', views.history, name='history'),
     url(r'^admin/', admin.site.urls),
 ]

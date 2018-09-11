@@ -1,15 +1,22 @@
-from django.db import connection
 from django.db import models
-from django.db import transaction
 
 
 class Tickets(models.Model):
-    """Flexible timeseries statistics.
-
-    These are typically BTS-reported values like channel load.  As such, we
-    will keep the default on-delete 'cascade' behavior and delete these
-    instances when the linked BTS is deleted.
-    """
-    subject = models.TextField()
+    """Search tickets with updated solution"""
+    problem = models.TextField()
     solution = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return 'Problem: %s' % self.problem
+
+
+class History(models.Model):
+    """Search tickets with updated solution"""
+    problem = models.TextField()
+    solution = models.TextField()
+    confidence = models.CharField(max_length=5, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return 'Problem: %s ' % self.problem
