@@ -13,7 +13,7 @@
                     <div class="input-group mb-3">
                         <input type="text" id="search_for" class="form-control" placeholder="Enter ticket subject..." aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <input type="button" id="search" value="Search" class="btn btn-outline-secondary btn-login float-right" />
+                            <button type="button" id="search" value="Search" class="btn btn-outline-secondary btn-login float-right">Search</button>
                         </div>
                     </div>
                 </div>
@@ -140,8 +140,17 @@
     }
 
     $('#search').click(function () {
-        if($('#search_for').val()) {
-            $('#search').attr("disabled", "disabled");
+    //function searchProblem() {
+        if ($('#search_for').val()) {
+            //$('#search').attr("disabled", "disabled");
+
+            var $this = $('.btn');
+            var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+            if ($(this).html() !== loadingText) {
+                $this.data('original-text', $(this).html());
+                $this.html(loadingText);
+                //searchProblem();
+            }
 
             $.ajax({
                 method: "GET",
@@ -152,16 +161,20 @@
                 $("#collapseResult").html("");
                 $('#results').show();
                 $('#result_update_row').show();
-                $('#search').removeAttr("disabled");
+                $this.html($this.data('original-text'));
+                var index = 1
 
                 $.each(data["response"], function (key, val) {
                     var container = 'container';
                     var el = document.createElement('div');
-                    if (val.confidence >= 0.5) {
+                    if (index == 1) {
                         var domString = '<div class="card alert-success">\n' +
                             '                            <div class="card-header">\n' +
-                            '                                <div class="col-md-8 float-left">\n' +
-                            '                                    <div id="container1">Confidence: ' + (val.confidence * 100) + '%</div>\n' +
+                            '                                <div class="col-md-4 float-left">\n' +
+                            '                                    <div id="container1" class="container_progressbar"></div>\n' +
+                            '                                </div>\n' +
+                            '                                <div class="col-md-4 float-left">\n' +
+                            '                                    <div >Confidence: ' + (val.confidence * 100).toFixed(1) + '%</div>\n' +
                             '                                </div>\n' +
                             '                                <div class="col-md-2 float-right" align="right">\n' +
                             '                                    <div>Rate: &nbsp;\n' +
@@ -175,11 +188,14 @@
                             '                            </div>\n' +
                             '                        </div>\n' +
                             '                        <div>&nbsp;</div>';
-                    } else if (val.confidence >= 0.3) {
+                    } else if (index == 2) {
                         var domString = '<div class="card alert-warning">\n' +
                             '                            <div class="card-header">\n' +
-                            '                                <div class="col-md-8 float-left">\n' +
-                            '                                    <div id="container2">Confidence: ' + (val.confidence * 100) + '%</div>\n' +
+                            '                                <div class="col-md-4 float-left">\n' +
+                            '                                    <div id="container2" class="container_progressbar"></div>\n' +
+                            '                                </div>\n' +
+                            '                                <div class="col-md-4 float-left">\n' +
+                            '                                    <div >Confidence: ' + (val.confidence * 100).toFixed(1) + '%</div>\n' +
                             '                                </div>\n' +
                             '                                <div class="col-md-2 float-right" align="right">\n' +
                             '                                    <div>Rate: &nbsp;\n' +
@@ -196,8 +212,11 @@
                     } else {
                         var domString = '<div class="card alert-dark">\n' +
                             '                            <div class="card-header">\n' +
-                            '                                <div class="col-md-8 float-left">\n' +
-                            '                                    <div id="container3">Confidence: ' + (val.confidence * 100) + '%</div>\n' +
+                            '                                <div class="col-md-4 float-left">\n' +
+                            '                                    <div id="container3" class="container_progressbar"></div>\n' +
+                            '                                </div>\n' +
+                            '                                <div class="col-md-4 float-left">\n' +
+                            '                                    <div >Confidence: ' + (val.confidence * 100).toFixed(1) + '%</div>\n' +
                             '                                </div>\n' +
                             '                                <div class="col-md-2 float-right" align="right">\n' +
                             '                                    <div>Rate: &nbsp;\n' +
@@ -212,6 +231,7 @@
                             '                        </div>\n' +
                             '                        <div>&nbsp;</div>';
                     }
+                    index++;
                     el.innerHTML = domString;
                     $("#collapseResult").append(el.firstChild);
                     var el2 = document.createElement('div');
@@ -221,19 +241,25 @@
                 });
 
             }).done(function (data) {
-                console.log("DONE");
+                var index = 1
                 $.each(data["response"], function (key, val) {
-                    console.log((key, val));
-                    //createProgressBar(container, val.confidence);
+                    if (index ==1) {
+                        createProgressBar(container1, val.confidence);
+                    } else if (index == 2) {
+                        createProgressBar(container2, val.confidence);
+                    } else {
+                        createProgressBar(container3, val.confidence);
+                    }
+                    index++;
                 });
                 $('#collapseResult').slideDown('slow');
 
             }).fail(function () {
+                $this.html($this.data('original-text'));
                 $('#search_for').val("fail");
             });
         }
     });
-
 
 </script>
 
